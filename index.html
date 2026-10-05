@@ -1,1 +1,627 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise ❤️</title>
+
+<style>
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,sans-serif
+}
+body{
+  background:radial-gradient(ellipse at 50% 15%,#7b123d 0%,#35091f 38%,#10050e 78%);
+  color:#fff;
+  overflow:hidden
+}
+.screen{
+  min-height:100vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:22px;
+  position:relative;
+  isolation:isolate
+}
+.screen.active{display:flex}
+.screen:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 15% 80%,#ff286b20,transparent 35%),
+    radial-gradient(circle at 85% 25%,#ff174420,transparent 30%)
+}
+.card{
+  width:min(92vw,440px);
+  padding:34px 24px;
+  border:1px solid #ff9ab94a;
+  border-radius:28px;
+  background:linear-gradient(145deg,#ffeff00e,#ff4e8712);
+  backdrop-filter:blur(16px);
+  box-shadow:
+    0 20px 70px #0008,
+    0 0 35px #ff1d6330,
+    inset 0 1px #ffffff18
+}
+.lock{
+  font-size:60px;
+  margin-bottom:15px;
+  filter:drop-shadow(0 0 18px #ff276f);
+  animation:pulse 2s infinite
+}
+h1{
+  font-size:32px;
+  margin:8px 0 12px
+}
+p{
+  line-height:1.7;
+  color:#ffe0eb
+}
+input{
+  width:100%;
+  padding:15px;
+  border:1px solid #ff82aa75;
+  border-radius:14px;
+  background:#260916b8;
+  color:#fff;
+  text-align:center;
+  font-size:17px;
+  outline:none
+}
+input::placeholder{color:#d8a1b5}
+button{
+  margin-top:16px;
+  border:1px solid #ffb2ca70;
+  border-radius:999px;
+  padding:14px 25px;
+  font-size:16px;
+  font-weight:bold;
+  color:#fff;
+  background:linear-gradient(110deg,#ff286b,#e50945 55%,#b00046);
+  box-shadow:
+    0 8px 28px #ff174955,
+    inset 0 1px #ffffff50;
+  cursor:pointer;
+  transition:transform .2s,filter .2s
+}
+button:active{transform:scale(.97)}
+button:hover{filter:brightness(1.15)}
+.err{
+  height:22px;
+  color:#ffabc7;
+  margin-top:8px;
+  font-size:14px
+}
+.small{
+  font-size:13px;
+  color:#e5aabe
+}
+.birthday-title{
+  font-size:clamp(38px,11vw,65px);
+  background:linear-gradient(90deg,#fff0f6,#ff9fbe,#ff315f,#ffb6d0);
+  background-size:220%;
+  -webkit-background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 18px #ff246455);
+  animation:shine 4s linear infinite
+}
+.message{font-size:17px}
+.short-birthday-msg{
+  font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
+  font-size:18px;
+  line-height:1.9;
+  color:#fff0f5;
+  text-shadow:0 0 12px #ff3f78aa;
+  margin:8px 0 12px
+}
+.tiny-hint{
+  font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
+  font-size:14px;
+  line-height:1.8;
+  color:#ffc5d8;
+  margin:8px 0 2px
+}
+
+#story .card{
+  max-height:88vh;
+  overflow:auto;
+  border-color:#ff8bad55
+}
+#story .card::-webkit-scrollbar{display:none}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px) scale(.98);
+  transition:opacity 1s,transform 1s
+}
+.reveal.show{
+  opacity:1;
+  transform:none
+}
+
+.final{
+  font-size:24px;
+  color:#ffb4ce;
+  font-weight:bold;
+  text-shadow:0 0 18px #ff285e70
+}
+
+.heart{
+  position:fixed;
+  bottom:-35px;
+  z-index:-1;
+  font-size:20px;
+  animation:float 8s linear infinite;
+  opacity:.75;
+  filter:drop-shadow(0 0 8px #ff286b)
+}
+
+.spark{
+  position:fixed;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:#ff9fbe;
+  box-shadow:0 0 12px 3px #ff286b;
+  opacity:.6;
+  animation:twinkle 3s ease-in-out infinite alternate;
+  z-index:-1
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.08)}
+}
+
+@keyframes float{
+  to{
+    transform:translateY(-115vh) rotate(360deg);
+    opacity:0
+  }
+}
+
+@keyframes shine{
+  0%{background-position:0%}
+  100%{background-position:220%}
+}
+
+@keyframes twinkle{
+  to{
+    opacity:1;
+    transform:scale(1.8)
+  }
+}
+
+.pop{
+  animation:pop .8s ease both
+}
+
+@keyframes pop{
+  0%{
+    transform:scale(.8);
+    opacity:0
+  }
+  100%{
+    transform:scale(1);
+    opacity:1
+  }
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+.story-card{
+  padding:30px 22px;
+  max-height:88vh;
+  overflow:auto;
+  text-align:left
+}
+.story-card::-webkit-scrollbar{display:none}
+
+.story-heading{
+  text-align:center;
+  font-size:25px;
+  margin-bottom:25px;
+  color:#ffd4e2;
+  text-shadow:0 0 15px #ff286b
+}
+
+.story-para{
+  font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
+  font-size:19px;
+  line-height:2;
+  color:#fff0f5;
+  text-shadow:0 0 12px #ff3f78aa;
+  margin:0 0 25px;
+  opacity:0;
+  transform:translateY(16px);
+  animation:paraIn .7s ease forwards
+}
+
+.final{
+  text-align:center;
+  font-size:26px;
+  color:#ffb4ce;
+  font-weight:bold;
+  text-shadow:0 0 18px #ff285e70;
+  margin-top:25px
+}
+
+@keyframes paraIn{
+  to{
+    opacity:1;
+    transform:none
+  }
+}
+
+.site-credit{
+  position:absolute;
+  bottom:9px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:.7px;
+  color:rgba(255,210,225,.55);
+  z-index:5;
+  pointer-events:none
+}
+
+.written-by{
+  display:inline-block;
+  margin-top:14px;
+  font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
+  font-size:15px;
+  color:#ffd0df;
+  text-shadow:0 0 14px #ff286b;
+  animation:writtenPop 1.2s ease both
+}
+
+@keyframes writtenPop{
+  0%{
+    opacity:0;
+    transform:translateY(12px) scale(.9)
+  }
+  100%{
+    opacity:1;
+    transform:none
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<section id="lock" class="screen active">
+
+<div class="card pop">
+
+<div class="lock">🔒</div>
+
+<div class="small">
+A little surprise is waiting for you...
+</div>
+
+<h1>
+Secret Birthday Surprise 💗
+</h1>
+
+<p>
+Only someone special should be able to open this. ✨
+</p>
+
+<input
+id="password"
+type="password"
+placeholder="Enter the secret password"
+>
+
+<button onclick="unlock()">
+🔓 Unlock Surprise
+</button>
+
+<div id="error" class="err"></div>
+
+<div class="small">
+Hint: birthday girl knows the secret 😉
+</div>
+
+</div>
+
+<div class="site-credit">
+Created by Janitha
+</div>
+
+</section>
+
+
+<section id="birthday" class="screen">
+
+<div class="card pop">
+
+<div style="font-size:58px;filter:drop-shadow(0 0 15px #ff286b)">
+🎂✨
+</div>
+
+<h1 class="birthday-title">
+Happy Birthday Ameesha 💗
+</h1>
+
+<p class="short-birthday-msg">
+
+මගේ සුදු නෝනා ට සුභම සුභ උපන්දිනයක් වේවා🤍🎀✨️.<br>
+
+හැමදාම ආදරේයි මං🥺💘.
+
+</p>
+
+<p class="tiny-hint">
+
+චුටි msg එකක් තියෙ 💌<br>
+button එක press කරලා යන්න ✨
+
+</p>
+
+<button onclick="startStory()">
+💝 Open Your Surprise
+</button>
+
+</div>
+
+<div class="site-credit">
+Created by Janitha
+</div>
+
+</section>
+
+
+<section id="story" class="screen">
+
+<div class="card story-card">
+
+<div class="story-heading">
+💌 A Little Message For You 💗
+</div>
+
+<div id="storyText"></div>
+
+<div id="storyFinal" class="final"></div>
+
+</div>
+
+</section>
+
+
+<script>
+
+const correctPassword="sudunona1025";
+
+
+function decorate(){
+
+  for(let i=0;i<22;i++){
+
+    let e=document.createElement("div");
+
+    e.className="heart";
+
+    e.textContent=[
+      "💗",
+      "❤️",
+      "💕",
+      "✨",
+      "🌹"
+    ][Math.floor(Math.random()*5)];
+
+    e.style.left=Math.random()*100+"vw";
+
+    e.style.animationDelay=Math.random()*7+"s";
+
+    e.style.animationDuration=(6+Math.random()*5)+"s";
+
+    document.body.appendChild(e);
+  }
+
+
+  for(let i=0;i<28;i++){
+
+    let s=document.createElement("div");
+
+    s.className="spark";
+
+    s.style.left=Math.random()*100+"vw";
+
+    s.style.top=Math.random()*100+"vh";
+
+    s.style.animationDelay=Math.random()*3+"s";
+
+    document.body.appendChild(s);
+  }
+
+}
+
+
+decorate();
+
+
+function show(id){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s=>s.classList.remove("active"));
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+}
+
+
+function unlock(){
+
+  let p=document
+    .getElementById("password")
+    .value
+    .trim()
+    .toLowerCase();
+
+  if(p===correctPassword){
+
+    show("birthday");
+
+    let card=document.querySelector("#birthday .card");
+
+    card.classList.remove("pop");
+
+    void card.offsetWidth;
+
+    card.classList.add("pop");
+
+  }else{
+
+    document
+      .getElementById("error")
+      .textContent="Wrong password 💗 Try again.";
+
+  }
+
+}
+
+
+document
+  .getElementById("password")
+  .addEventListener("keydown",e=>{
+
+    if(e.key==="Enter") unlock();
+
+  });
+
+
+const paragraphs=[
+
+`අද මගේ සත්තලංගේ Birthday එක..
+ මේ පුංචි surprise එක ඔයා වෙනුවෙන්ම. ✨`,
+
+`ඔයා දන්නවාද සූදු.. ඔයාව මට හම්බවෙලා වැඩි කාලයක් ගියේ නැති උනාට මට ඔයාව ගොඩක්ම දැනුනා.🥺🎀`,
+
+`මං තමුසෙට මේ ලෝකේ කාටත් වඩා ආදරෙයි.❤️`,
+
+`ඔයා දන්නේ නැති උනාට ඔයා හිනා වෙනවා බලන්න, ඔය ලස්සන සුරංගනාවිගේ කට හඩ අහන්න මං මාර විදිහට ආසයි🥺💕`,
+
+`අද මගේ සුදු නෝනාට විශේෂ දවසක්.. ඉතින් ඒ විශේෂ දවස ඔයාට කවදාවත් අමතක වෙන එකක් නැති වෙයි🥺💝`,
+
+`ඔයා මට ආදරේ නැති උනත් මං ඔයාට ආදරෙයි ගොඩාරියක්..✨️`,
+
+`මට මගේ මැණිකට මොකුත් අරන් දෙන්න විදිහක් නැහැ නේ 😓 අපි දෙන්න ඉන්නේ ගොඩක් දුර. මං මගේ මැණිකට දෙන්න අරන් තියාගෙන ඉන්න ඒවා ඔක්කොම දෙන්නම්. එතකන් ඉන්න හරිද? 🥺🎀✨️`,
+
+`මං Birthday එක දවසෙත් කියන්නේ.. ඔයාගේ හිනාව හැමදාම වගේම පරිස්සම් කර ගන්න.🌸`,
+
+`තව මගේ මැණිකගේ හැම හීනයක්ම එකින් එක සැබෑ වෙන්න කියලා මම හදවතින්ම wish කරනවා. 💫`,
+
+`මං පොරොන්දුවක් වෙන්නම් සුදු.. ඔයාගෙ හැම ප්‍රශ්නයකදිම මං ඔයත් එක්ක හිටියා. ඉස්සරහටත් ඒ විදිහටම මම ඉන්නවා.🥺🎀🤍 ඒ මොකද දන්නවාද මට මගේ මැණිකව කාටත් වඩා වටිනවා.🥺💋`,
+
+`හැමදාම හිනා වෙලා සතුටින් ඉන්න. මං ආදරෙයි හැමදාටම🥺 💌💘`
+
+];
+
+
+function startStory(){
+
+  show("story");
+
+  const box=document.querySelector("#story .story-card");
+
+  box.classList.remove("pop");
+
+  void box.offsetWidth;
+
+  box.classList.add("pop");
+
+  document.getElementById("storyText").innerHTML="";
+
+  document.getElementById("storyFinal").textContent="";
+
+  typeParagraph(0);
+
+}
+
+
+function typeParagraph(index){
+
+  if(index>=paragraphs.length){
+
+    document.getElementById("storyFinal").innerHTML=
+      '🎂❤️✨ Happy Birthday manika! ✨❤️🎂<br><span class="written-by">Written by oyage chuti buru patiya 🥺💗✨</span>';
+
+    return;
+  }
+
+
+  const p=document.createElement("div");
+
+  p.className="story-para";
+
+  document
+    .getElementById("storyText")
+    .appendChild(p);
+
+
+  const text=paragraphs[index];
+
+  let i=0;
+
+
+  const cursor=document.createElement("span");
+
+  cursor.className="cursor";
+
+  cursor.textContent="|";
+
+  p.appendChild(cursor);
+
+
+  function type(){
+
+    if(i<text.length){
+
+      cursor.before(
+        document.createTextNode(text[i++])
+      );
+
+      const card=document.querySelector("#story .story-card");
+
+      card.scrollTop=card.scrollHeight;
+
+      setTimeout(type,120);
+
+    }else{
+
+      cursor.remove();
+
+      setTimeout(
+        ()=>typeParagraph(index+1),
+        350
+      );
+
+    }
+
+  }
+
+  type();
+
+}
+
+</script>
+
+</body>
+</html>
