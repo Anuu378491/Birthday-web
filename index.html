@@ -7,16 +7,19 @@
 
 <style>
 *{box-sizing:border-box}
+
 html,body{
   margin:0;
   min-height:100%;
   font-family:Arial,sans-serif
 }
+
 body{
   background:radial-gradient(ellipse at 50% 15%,#7b123d 0%,#35091f 38%,#10050e 78%);
   color:#fff;
   overflow:hidden
 }
+
 .screen{
   min-height:100vh;
   display:none;
@@ -27,7 +30,9 @@ body{
   position:relative;
   isolation:isolate
 }
+
 .screen.active{display:flex}
+
 .screen:before{
   content:"";
   position:absolute;
@@ -37,6 +42,7 @@ body{
     radial-gradient(circle at 15% 80%,#ff286b20,transparent 35%),
     radial-gradient(circle at 85% 25%,#ff174420,transparent 30%)
 }
+
 .card{
   width:min(92vw,440px);
   padding:34px 24px;
@@ -49,20 +55,24 @@ body{
     0 0 35px #ff1d6330,
     inset 0 1px #ffffff18
 }
+
 .lock{
   font-size:60px;
   margin-bottom:15px;
   filter:drop-shadow(0 0 18px #ff276f);
   animation:pulse 2s infinite
 }
+
 h1{
   font-size:32px;
   margin:8px 0 12px
 }
+
 p{
   line-height:1.7;
   color:#ffe0eb
 }
+
 input{
   width:100%;
   padding:15px;
@@ -74,7 +84,9 @@ input{
   font-size:17px;
   outline:none
 }
+
 input::placeholder{color:#d8a1b5}
+
 button{
   margin-top:16px;
   border:1px solid #ffb2ca70;
@@ -90,18 +102,22 @@ button{
   cursor:pointer;
   transition:transform .2s,filter .2s
 }
+
 button:active{transform:scale(.97)}
 button:hover{filter:brightness(1.15)}
+
 .err{
   height:22px;
   color:#ffabc7;
   margin-top:8px;
   font-size:14px
 }
+
 .small{
   font-size:13px;
   color:#e5aabe
 }
+
 .birthday-title{
   font-size:clamp(38px,11vw,65px);
   background:linear-gradient(90deg,#fff0f6,#ff9fbe,#ff315f,#ffb6d0);
@@ -111,7 +127,7 @@ button:hover{filter:brightness(1.15)}
   filter:drop-shadow(0 0 18px #ff246455);
   animation:shine 4s linear infinite
 }
-.message{font-size:17px}
+
 .short-birthday-msg{
   font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
   font-size:18px;
@@ -120,6 +136,7 @@ button:hover{filter:brightness(1.15)}
   text-shadow:0 0 12px #ff3f78aa;
   margin:8px 0 12px
 }
+
 .tiny-hint{
   font-family:'Noto Sans Sinhala','Nirmala UI',sans-serif;
   font-size:14px;
@@ -133,6 +150,7 @@ button:hover{filter:brightness(1.15)}
   overflow:auto;
   border-color:#ff8bad55
 }
+
 #story .card::-webkit-scrollbar{display:none}
 
 .reveal{
@@ -140,6 +158,7 @@ button:hover{filter:brightness(1.15)}
   transform:translateY(24px) scale(.98);
   transition:opacity 1s,transform 1s
 }
+
 .reveal.show{
   opacity:1;
   transform:none
@@ -211,19 +230,213 @@ button:hover{filter:brightness(1.15)}
     opacity:1
   }
 }
-</style>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
+/* =========================
+   BIRTHDAY CAKE
+========================= */
+
+.cake-box{
+  width:220px;
+  height:185px;
+  margin:0 auto 10px;
+  position:relative;
+  animation:cakeAppear 1s ease both;
+}
+
+.cake{
+  position:relative;
+  width:220px;
+  height:180px;
+  margin:auto;
+}
+
+/* Plate */
+
+.plate{
+  position:absolute;
+  bottom:5px;
+  left:0;
+  width:220px;
+  height:12px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 4px 8px #0005;
+}
+
+/* Bottom cake */
+
+.layer.bottom{
+  position:absolute;
+  bottom:15px;
+  left:15px;
+  width:190px;
+  height:55px;
+  background:linear-gradient(#a96d5d,#78483f);
+  border-radius:10px 10px 15px 15px;
+  box-shadow:inset 0 -5px #5b302c55;
+}
+
+/* Top cake */
+
+.layer.top{
+  position:absolute;
+  bottom:65px;
+  left:15px;
+  width:190px;
+  height:55px;
+  background:linear-gradient(#b97967,#895247);
+  border-radius:10px 10px 12px 12px;
+  box-shadow:inset 0 -5px #63352f44;
+}
+
+/* Cream */
+
+.cream{
+  position:absolute;
+  bottom:103px;
+  left:10px;
+  width:200px;
+  height:30px;
+  background:#fff8e8;
+  border-radius:15px 15px 8px 8px;
+  z-index:3;
+  box-shadow:0 2px 5px #0002;
+}
+
+/* Cream drips */
+
+.drip{
+  position:absolute;
+  top:72px;
+  width:16px;
+  background:#fff8e8;
+  border-radius:0 0 12px 12px;
+  z-index:4;
+  animation:drip 1.5s ease-out forwards;
+}
+
+.d1{
+  left:35px;
+  height:38px;
+  animation-delay:.2s;
+}
+
+.d2{
+  left:75px;
+  height:25px;
+  animation-delay:.35s;
+}
+
+.d3{
+  left:115px;
+  height:35px;
+  animation-delay:.5s;
+}
+
+.d4{
+  left:155px;
+  height:27px;
+  animation-delay:.65s;
+}
+
+/* Candles */
+
+.candle{
+  position:absolute;
+  bottom:128px;
+  width:9px;
+  height:42px;
+  background:#fff;
+  border-radius:5px;
+  z-index:5;
+  opacity:0;
+  box-shadow:inset -2px 0 #ddd;
+  animation:candleIn .6s ease forwards;
+}
+
+.c1{left:35px;animation-delay:1.2s}
+.c2{left:62px;animation-delay:1.35s}
+.c3{left:89px;animation-delay:1.5s}
+.c4{left:116px;animation-delay:1.65s}
+.c5{left:143px;animation-delay:1.8s}
+.c6{left:170px;animation-delay:1.95s}
+
+/* Flames */
+
+.flame{
+  position:absolute;
+  top:-18px;
+  left:-3px;
+  width:15px;
+  height:20px;
+  background:#ffd21f;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  box-shadow:
+    0 0 8px #ffb300,
+    0 0 18px #ff9800;
+  animation:flame .18s infinite alternate;
+}
+
+@keyframes cakeAppear{
+  0%{
+    opacity:0;
+    transform:translateY(-40px) scale(.75);
+  }
+  70%{
+    transform:translateY(5px) scale(1.05);
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+@keyframes drip{
+  0%{
+    transform:translateY(-35px) scaleY(.4);
+    opacity:0;
+  }
+  70%{
+    opacity:1;
+  }
+  100%{
+    transform:translateY(0) scaleY(1);
+    opacity:1;
+  }
+}
+
+@keyframes candleIn{
+  0%{
+    transform:translateY(30px);
+    opacity:0;
+  }
+  100%{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+@keyframes flame{
+  from{
+    transform:rotate(-45deg) scale(.85);
+  }
+  to{
+    transform:rotate(-40deg) scale(1.15);
+  }
+}
+
+
+/* STORY */
+
 .story-card{
   padding:30px 22px;
   max-height:88vh;
   overflow:auto;
   text-align:left
 }
+
 .story-card::-webkit-scrollbar{display:none}
 
 .story-heading{
@@ -271,7 +484,7 @@ button:hover{filter:brightness(1.15)}
   font-family:Arial,sans-serif;
   font-size:10px;
   letter-spacing:.7px;
-  color:rgba(255,210,225,.55);
+  color:#ffd2e199;
   z-index:5;
   pointer-events:none
 }
@@ -296,11 +509,18 @@ button:hover{filter:brightness(1.15)}
     transform:none
   }
 }
+
 </style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
+
+<!-- PASSWORD -->
 
 <section id="lock" class="screen active">
 
@@ -345,16 +565,62 @@ Created by Janitha
 </section>
 
 
+<!-- BIRTHDAY -->
+
 <section id="birthday" class="screen">
 
 <div class="card pop">
 
-<div style="font-size:58px;filter:drop-shadow(0 0 15px #ff286b)">
-🎂✨
+<!-- ANIMATED CAKE -->
+
+<div class="cake-box">
+
+<div class="cake">
+
+<div class="layer bottom"></div>
+
+<div class="layer top"></div>
+
+<div class="cream"></div>
+
+<div class="drip d1"></div>
+<div class="drip d2"></div>
+<div class="drip d3"></div>
+<div class="drip d4"></div>
+
+<div class="candle c1">
+<div class="flame"></div>
 </div>
 
+<div class="candle c2">
+<div class="flame"></div>
+</div>
+
+<div class="candle c3">
+<div class="flame"></div>
+</div>
+
+<div class="candle c4">
+<div class="flame"></div>
+</div>
+
+<div class="candle c5">
+<div class="flame"></div>
+</div>
+
+<div class="candle c6">
+<div class="flame"></div>
+</div>
+
+<div class="plate"></div>
+
+</div>
+
+</div>
+
+
 <h1 class="birthday-title">
-Happy Birthday Ameesha 💗
+Happy Birthday Ameesha 💗✨️
 </h1>
 
 <p class="short-birthday-msg">
@@ -367,7 +633,7 @@ Happy Birthday Ameesha 💗
 
 <p class="tiny-hint">
 
-චුටි msg එකක් තියෙ 💌<br>
+චුටි msg එකක් එකක් තියේ මැණිකට 💌<br>
 button එක press කරලා යන්න ✨
 
 </p>
@@ -384,6 +650,8 @@ Created by Janitha
 
 </section>
 
+
+<!-- STORY -->
 
 <section id="story" class="screen">
 
@@ -509,8 +777,8 @@ document
 
 const paragraphs=[
 
-`අද මගේ සත්තලංගේ Birthday එක..
- මේ පුංචි surprise එක ඔයා වෙනුවෙන්ම. ✨`,
+`අද මගේ සත්තලංගේ Birthday එකනෙ..💗🎀
+ මේ පුංචි surprise එක ඔයා වෙනුවෙන්මයි. ✨`,
 
 `ඔයා දන්නවාද සූදු.. ඔයාව මට හම්බවෙලා වැඩි කාලයක් ගියේ නැති උනාට මට ඔයාව ගොඩක්ම දැනුනා.🥺🎀`,
 
@@ -524,13 +792,15 @@ const paragraphs=[
 
 `මට මගේ මැණිකට මොකුත් අරන් දෙන්න විදිහක් නැහැ නේ 😓 අපි දෙන්න ඉන්නේ ගොඩක් දුර. මං මගේ මැණිකට දෙන්න අරන් තියාගෙන ඉන්න ඒවා ඔක්කොම දෙන්නම්. එතකන් ඉන්න හරිද? 🥺🎀✨️`,
 
-`මං Birthday එක දවසෙත් කියන්නේ.. ඔයාගේ හිනාව හැමදාම වගේම පරිස්සම් කර ගන්න.🌸`,
+`මං Birthday එක දවසෙත් කියන්නේ.. ඔයාගේ හිනාව හැමදාම වගේම පරිස්සම් කර ගන්න සුදු.🌸`,
 
 `තව මගේ මැණිකගේ හැම හීනයක්ම එකින් එක සැබෑ වෙන්න කියලා මම හදවතින්ම wish කරනවා. 💫`,
 
-`මං පොරොන්දුවක් වෙන්නම් සුදු.. ඔයාගෙ හැම ප්‍රශ්නයකදිම මං ඔයත් එක්ක හිටියා. ඉස්සරහටත් ඒ විදිහටම මම ඉන්නවා.🥺🎀🤍 ඒ මොකද දන්නවාද මට මගේ මැණිකව කාටත් වඩා වටිනවා.🥺💋`,
+`මං පොරොන්දුවක් වෙන්නම් සුදු.. ඔයාගෙ හැම ප්‍රශ්නයකදිම මං ඔයත් එක්ක හිටියා. ඉස්සරහටත් ඒ විදිහටම මම ඉන්නවා.🥺🎀🤍 ඒ මොකද දන්නවාද මට මගේ මැණිකව කාටත් වඩා වටිනවා..🥺💋` ,
 
-`හැමදාම හිනා වෙලා සතුටින් ඉන්න. මං ආදරෙයි හැමදාටම🥺 💌💘`
+`හැමදාම හිනා වෙලා සතුටින් ඉන්න. මං ආදරෙයි හැමදාටම🥺 💌💘` ,
+`I LOVE YOU SUDU NONE..🥺💕`
+
 
 ];
 
